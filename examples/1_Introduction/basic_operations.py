@@ -7,7 +7,14 @@ Project: https://github.com/aymericdamien/TensorFlow-Examples/
 
 from __future__ import print_function
 
+
+from warnings import simplefilter
+simplefilter(action='ignore', category=FutureWarning)
+
+
 import tensorflow as tf
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 # Basic constant operations
 # The value returned by the constructor represents the output
@@ -16,7 +23,7 @@ a = tf.constant(2)
 b = tf.constant(3)
 
 # Launch the default graph.
-with tf.Session() as sess:
+with tf.compat.v1.Session() as sess:
     print("a=2, b=3")
     print("Addition with constants: %i" % sess.run(a+b))
     print("Multiplication with constants: %i" % sess.run(a*b))
@@ -25,15 +32,15 @@ with tf.Session() as sess:
 # The value returned by the constructor represents the output
 # of the Variable op. (define as input when running session)
 # tf Graph input
-a = tf.placeholder(tf.int16)
-b = tf.placeholder(tf.int16)
+a = tf.compat.v1.placeholder(tf.int16)
+b = tf.compat.v1.placeholder(tf.int16)
 
 # Define some operations
 add = tf.add(a, b)
 mul = tf.multiply(a, b)
 
 # Launch the default graph.
-with tf.Session() as sess:
+with tf.compat.v1.Session() as sess:
     # Run every operation with variable input
     print("Addition with variables: %i" % sess.run(add, feed_dict={a: 2, b: 3}))
     print("Multiplication with variables: %i" % sess.run(mul, feed_dict={a: 2, b: 3}))
@@ -69,7 +76,7 @@ product = tf.matmul(matrix1, matrix2)
 # graph: the two constants and matmul.
 #
 # The output of the op is returned in 'result' as a numpy `ndarray` object.
-with tf.Session() as sess:
+with tf.compat.v1.Session() as sess:
     result = sess.run(product)
     print(result)
     # ==> [[ 12.]]
